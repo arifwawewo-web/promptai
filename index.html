@@ -128,8 +128,87 @@ pre.code{font-family:var(--mono);font-size:.82rem;line-height:1.7;white-space:pr
 .btn.copied{animation:pop .55s}
 @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.04);box-shadow:0 0 0 10px rgba(0,245,212,.28)}100%{transform:scale(1);box-shadow:0 0 30px rgba(var(--accrgb),.4)}}
 
-footer{text-align:center;padding:10px 20px 44px;font-family:var(--mono);font-size:.68rem;letter-spacing:.26em;color:var(--muted)}
-footer b{color:var(--text);font-weight:600;display:block;margin-bottom:6px;letter-spacing:.2em}
+footer{text-align:center;padding:10px 20px 48px;font-family:var(--mono);text-transform:uppercase}
+footer b{display:block;font-weight:700;font-size:.82rem;letter-spacing:.22em;line-height:1.5;
+  background:linear-gradient(100deg,var(--blue),var(--purple) 50%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+footer .school{display:inline-block;margin-top:10px;font-size:.72rem;letter-spacing:.3em;color:var(--gold);padding:6px 16px;border:1px solid rgba(255,200,87,.3);border-radius:999px;background:rgba(255,200,87,.05)}
+
+/* ===== modal alert pembuka ===== */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gate{position:fixed;inset:0;z-index:350;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(4,6,16,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;transition:opacity .4s}
+.gate[hidden]{display:none}
+.gate.show{opacity:1}
+.gate.leave{opacity:0}
+.gpanel{--acc:#00C8FF;--acc2:#8B5CFF;--accrgb:0,200,255;position:relative;isolation:isolate;width:min(540px,100%);border-radius:24px;animation:rot 6s linear infinite;transform:translateY(28px) scale(.94);transition:transform .5s cubic-bezier(.2,.9,.3,1.15)}
+.gate.show .gpanel{transform:none}
+.gate.leave .gpanel{transform:translateY(-14px) scale(.97)}
+.gpanel::before{content:"";position:absolute;inset:-1.5px;border-radius:25px;z-index:-2;background:conic-gradient(from var(--a),rgba(255,255,255,.06) 0 45%,var(--acc) 70%,var(--acc2) 88%,rgba(255,255,255,.06))}
+.gpanel::after{content:"";position:absolute;inset:-2px;border-radius:26px;z-index:-3;filter:blur(26px);opacity:.65;background:conic-gradient(from var(--a),transparent 0 50%,var(--acc) 72%,var(--acc2) 90%,transparent)}
+.gpanel.granted{--acc:#00F5D4;--acc2:#FFC857;--accrgb:0,245,212}
+.gpanel.warn{--acc:#FFC857;--acc2:#FF6B6B;--accrgb:255,200,87}
+.gbox{position:relative;border-radius:24px;overflow:hidden;padding:20px 26px 24px;text-align:center;background:linear-gradient(180deg,rgba(14,19,40,.97),rgba(8,11,25,.98))}
+.gbox::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 55% at 50% 0%,rgba(var(--accrgb),.2),transparent 70%)}
+.g-top{position:relative;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.64rem;letter-spacing:.22em;color:var(--acc);padding-bottom:14px;border-bottom:1px solid var(--line)}
+.g-top span:first-child{display:flex;align-items:center;gap:9px}
+.g-top .dot{background:var(--acc);box-shadow:0 0 10px var(--acc)}
+.g-icon{position:relative;width:78px;height:78px;margin:24px auto 14px;color:var(--acc);filter:drop-shadow(0 0 12px rgba(var(--accrgb),.8))}
+.g-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;animation:iconIn .55s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes iconIn{from{opacity:0;transform:scale(.5) rotate(-12deg)}to{opacity:1;transform:none}}
+.g-text{position:relative;font-family:var(--disp);font-size:clamp(1.2rem,4.6vw,1.6rem);line-height:1.35;letter-spacing:.02em;font-weight:700;min-height:5.4em;display:flex;align-items:center;justify-content:center;padding:0 4px;word-break:break-word}
+.g-text .tx::after{content:"";display:inline-block;width:.55em;height:1.05em;margin-left:4px;vertical-align:-.15em;background:var(--acc);box-shadow:0 0 10px var(--acc);animation:blink .7s steps(2) infinite}
+.g-text.done .tx::after{display:none}
+@keyframes blink{50%{opacity:0}}
+.g-scan{position:relative;height:4px;margin:6px 0 20px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden;opacity:0;transition:opacity .3s}
+.g-scan i{position:absolute;top:0;bottom:0;width:38%;background:linear-gradient(90deg,transparent,var(--acc),var(--acc2),transparent);animation:scanbar 1.1s ease-in-out infinite}
+.gbox.scanning .g-scan{opacity:1}
+@keyframes scanbar{0%{left:-40%}100%{left:102%}}
+.g-actions{position:relative;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:52px}
+.gbtn{position:relative;overflow:hidden;flex:1 1 180px;padding:14px 18px;border-radius:12px;font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;font-weight:800;text-transform:uppercase;color:#05081a;background:linear-gradient(120deg,var(--acc),var(--acc2));box-shadow:0 0 26px rgba(var(--accrgb),.4);transition:transform .2s,box-shadow .25s,opacity .3s;animation:btnIn .4s both}
+.gbtn.ghost{color:var(--text);background:linear-gradient(rgba(16,22,43,.95),rgba(16,22,43,.95)) padding-box,linear-gradient(135deg,var(--acc),var(--acc2)) border-box;border:1px solid transparent;box-shadow:none}
+.gbtn::after{content:"";position:absolute;top:0;bottom:0;width:55%;left:-80%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .6s}
+.gbtn:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(var(--accrgb),.55)}
+.gbtn:hover::after{left:140%}
+.gbtn:active{transform:scale(.97)}
+@keyframes btnIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.g-dots{position:relative;display:flex;justify-content:center;gap:8px;margin-top:20px}
+.g-dots i{width:26px;height:4px;border-radius:4px;background:rgba(255,255,255,.1);transition:background .3s,box-shadow .3s}
+.g-dots i.on{background:var(--acc);box-shadow:0 0 10px var(--acc)}
+.g-skip{position:relative;margin-top:14px;font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;color:var(--muted);padding:6px 10px;transition:color .2s}
+.g-skip:hover{color:var(--text)}
+.gbox.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+body.lock{overflow:hidden}
+/* --- futuristik HUD --- */
+.g-top b{font-weight:700}
+.gbox{padding-bottom:28px}
+.gbox::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.5;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+.gbox>*{z-index:2}
+.gc{position:absolute;width:20px;height:20px;border:2px solid var(--acc);opacity:.85;z-index:3;pointer-events:none;filter:drop-shadow(0 0 6px rgba(var(--accrgb),.8))}
+.gc.tl{top:9px;left:9px;border-right:0;border-bottom:0;border-top-left-radius:8px}
+.gc.tr{top:9px;right:9px;border-left:0;border-bottom:0;border-top-right-radius:8px}
+.gc.bl{bottom:9px;left:9px;border-right:0;border-top:0;border-bottom-left-radius:8px}
+.gc.br{bottom:9px;right:9px;border-left:0;border-top:0;border-bottom-right-radius:8px}
+.g-top{margin:6px 8px 0}
+.g-log{position:relative;margin:14px 6px 0;text-align:left;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;color:var(--cyan);opacity:.85;min-height:1.4em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-log::after{content:"_";animation:blink .8s steps(2) infinite}
+.g-log.in{animation:logIn .5s both}
+@keyframes logIn{from{opacity:0;transform:translateX(-12px)}to{opacity:.85;transform:none}}
+.g-icon{margin:18px auto 12px}
+.g-icon::before,.g-icon::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.g-icon::before{inset:-16px;border:1.5px dashed rgba(var(--accrgb),.55);animation:spin 14s linear infinite}
+.g-icon::after{inset:-26px;border:1px solid transparent;border-top-color:var(--acc);border-bottom-color:var(--acc2);animation:spin 3.2s linear infinite reverse;opacity:.9}
+.g-text{text-shadow:0 0 18px rgba(var(--accrgb),.35)}
+.gbox.glitch .g-text,.gbox.glitch .g-icon{animation:glitch .5s steps(2,end)}
+@keyframes glitch{
+  0%{transform:translate(0);text-shadow:2px 0 #ff2bd6,-2px 0 #00f5ff}
+  20%{transform:translate(-3px,1px);text-shadow:-3px 0 #ff2bd6,3px 0 #00f5ff;filter:hue-rotate(40deg)}
+  40%{transform:translate(3px,-1px);text-shadow:3px 0 #ff2bd6,-3px 0 #00f5ff}
+  60%{transform:translate(-2px,0);text-shadow:-2px 0 #ff2bd6,2px 0 #00f5ff;filter:none}
+  80%{transform:translate(1px,1px)}
+  100%{transform:translate(0);text-shadow:0 0 18px rgba(var(--accrgb),.35)}}
+.gpanel{width:min(580px,100%)}
+@media (max-width:480px){.gbox{padding:18px 18px 26px}.g-log{font-size:.58rem;letter-spacing:.08em}.g-icon{width:68px;height:68px}}
 
 /* toast */
 #toasts{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;width:min(94vw,520px)}
@@ -732,7 +811,25 @@ jawaban benar, jawaban salah, menang level) secara prosedural tanpa file audio e
   </div>
 </main>
 
-<footer><b>CREATED BY ACHMAD SYARIF HIDAYATHULLAH</b>SDN SEMARANGAN 5</footer>
+<footer><b>Created by Achmad Syarif Hidayathullah</b><span class="school">SDN Semarangan 5</span></footer>
+
+<!-- ===== MODAL ALERT PEMBUKA ===== -->
+<div class="gate" id="gate" hidden role="dialog" aria-modal="true" aria-label="Pesan sistem">
+  <div class="gpanel">
+    <div class="gbox" id="gBox">
+      <i class="gc tl"></i><i class="gc tr"></i><i class="gc bl"></i><i class="gc br"></i>
+      <div class="g-top"><span><i class="dot"></i><b id="gLabel">SIGNAL DETECTED</b></span><span id="gStep">01 / 05</span></div>
+      <div class="g-log" id="gLog" aria-hidden="true"></div>
+      <div class="g-icon" id="gIcon" aria-hidden="true"></div>
+      <p class="g-text" id="gText" aria-hidden="true"></p>
+      <span class="sr" id="gSr" aria-live="polite"></span>
+      <div class="g-scan" aria-hidden="true"><i></i></div>
+      <div class="g-actions" id="gActions"></div>
+      <div class="g-dots" id="gDots" aria-hidden="true"></div>
+    </div>
+  </div>
+</div>
+
 <div id="toasts" aria-live="polite"></div>
 
 <script>
@@ -846,8 +943,120 @@ jawaban benar, jawaban salah, menang level) secara prosedural tanpa file audio e
   }
   try { particles(); } catch (e) {}
 
-  /* ---- boot ---- */
-  function hideBoot() { var b = $('#boot'); if (b) b.classList.add('done'); }
+  /* ---- modal alert pembuka (5 langkah) ---- */
+  var I = {
+    eyes: '<circle cx="26" cy="40" r="14"/><circle cx="54" cy="40" r="14"/><circle cx="29" cy="40" r="5" fill="currentColor"/><circle cx="57" cy="40" r="5" fill="currentColor"/><path d="M8 20l14 6M72 20l-14 6" />',
+    ask: '<circle cx="40" cy="40" r="30"/><path d="M31 32c0-6 4-10 9-10s9 4 9 9c0 6-9 7-9 14"/><circle cx="40" cy="58" r="1.6" fill="currentColor"/>',
+    scan: '<path d="M10 24V10h14M56 10h14v14M70 56v14H56M24 70H10V56"/><circle cx="40" cy="34" r="9"/><path d="M22 60c2-10 10-14 18-14s16 4 18 14"/><path d="M14 40h52" opacity=".6"/>',
+    warn: '<path d="M40 10l32 56H8z"/><path d="M40 32v18"/><circle cx="40" cy="58" r="1.8" fill="currentColor"/>',
+    ok: '<circle cx="40" cy="40" r="30"/><path d="M26 41l10 10 19-21"/>'
+  };
+  var STEPS = [
+    { label: 'SIGNAL DETECTED', log: '> INCOMING_SIGNAL // IDENTITAS: TIDAK DIKENAL',
+      text: 'Hayooo buka web ini cari apa hayooo? Ada sinyal asing menembus gerbang markas! 👀',
+      icon: 'eyes', btns: [['LANJUT ›', 0]] },
+    { label: 'MISSION SELECT', log: '> MENUNGGU_INPUT // PILIH JALUR MISI',
+      text: 'Jujur! Pilih jalur misimu: membangun game dari nol, atau sekadar mengintai markas?',
+      icon: 'ask', btns: [['🎮 BANGUN GAME', 0], ['🛰️ MENGINTAI', 1]] },
+    { label: 'NEURAL SCAN', log: '> SCAN_IMAJINASI // MEMINDAI NEURON KREATIF...',
+      text: 'Scanning kreativitas... Pemindaian selesai! 99% DNA calon game developer terdeteksi! 🤣',
+      icon: 'scan', scan: true, btns: [['LANJUT ›', 0]] },
+    { label: 'SECURITY WARNING', log: '> PERINGATAN // MODE PASIF DITOLAK SISTEM',
+      text: 'Warning! Menyalin saja tidak cukup. Sistem hanya mengizinkan operator yang berani mengeksekusi prompt!',
+      icon: 'warn', tone: 'warn', btns: [['SIAP EKSEKUSI! 💪', 0]] },
+    { label: 'ACCESS GRANTED', log: '> OTORISASI_DITERIMA // STATUS: COMMANDER',
+      text: 'ACCESS GRANTED! Semua sistem online. Selamat datang di markas para kreator, Commander! 🚀',
+      icon: 'ok', tone: 'granted', btns: [['MASUK MARKAS 🚀', 0]] }
+  ];
+  var gate = $('#gate'), gBox = $('#gBox'), gText = $('#gText'), gPanel = $('.gpanel', gate);
+  var gi = 0, typeTimer = 0, typing = false, gOpen = false;
+
+  function dots() {
+    $('#gDots').innerHTML = STEPS.map(function (_, i) { return '<i class="' + (i <= gi ? 'on' : '') + '"></i>'; }).join('');
+  }
+  function finishTyping() {
+    clearInterval(typeTimer); typing = false;
+    gText.classList.add('done');
+    gText.innerHTML = '<span class="tx"></span>';
+    $('.tx', gText).textContent = STEPS[gi].text;
+    showButtons();
+  }
+  function showButtons() {
+    var s = STEPS[gi], box = $('#gActions');
+    box.innerHTML = '';
+    s.btns.forEach(function (b, i) {
+      var el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'gbtn' + (s.btns.length > 1 && i === 1 ? ' ghost' : '');
+      el.textContent = b[0];
+      el.style.animationDelay = (i * 80) + 'ms';
+      el.addEventListener('click', next);
+      box.appendChild(el);
+    });
+    var first = $('.gbtn', box); if (first) first.focus({ preventScroll: true });
+  }
+  function typeText(str) {
+    var chars = Array.from(str), n = 0;
+    gText.classList.remove('done');
+    gText.innerHTML = '<span class="tx"></span>';
+    var tx = $('.tx', gText);
+    $('#gSr').textContent = str;
+    $('#gActions').innerHTML = '';
+    if (reduce) { finishTyping(); return; }
+    typing = true;
+    typeTimer = setInterval(function () {
+      n++; tx.textContent = chars.slice(0, n).join('');
+      if (n >= chars.length) finishTyping();
+    }, 30);
+  }
+  function renderStep() {
+    var s = STEPS[gi];
+    $('#gStep').textContent = '0' + (gi + 1) + ' / 0' + STEPS.length;
+    $('#gLabel').textContent = s.label;
+    var lg = $('#gLog'); lg.textContent = s.log; lg.classList.remove('in'); void lg.offsetWidth; lg.classList.add('in');
+    if (!reduce) { gBox.classList.remove('glitch'); void gBox.offsetWidth; gBox.classList.add('glitch'); }
+    gPanel.classList.toggle('granted', s.tone === 'granted');
+    gPanel.classList.toggle('warn', s.tone === 'warn');
+    gBox.classList.toggle('scanning', !!s.scan);
+    $('#gIcon').innerHTML = '<svg viewBox="0 0 80 80" aria-hidden="true">' + I[s.icon] + '</svg>';
+    if (s.tone === 'warn') { gBox.classList.remove('shake'); void gBox.offsetWidth; gBox.classList.add('shake'); }
+    dots();
+    typeText(s.text);
+  }
+  function next() {
+    if (gi >= STEPS.length - 1) { closeGate(); return; }
+    gi++; renderStep();
+  }
+  function openGate() {
+    gOpen = true; gi = 0;
+    gate.hidden = false; void gate.offsetWidth; gate.classList.add('show');
+    document.body.classList.add('lock');
+    renderStep();
+  }
+  function closeGate() {
+    if (!gOpen) return;
+    gOpen = false; clearInterval(typeTimer); typing = false;
+    gate.classList.add('leave');
+    setTimeout(function () { gate.hidden = true; gate.classList.remove('show', 'leave'); document.body.classList.remove('lock'); }, 420);
+  }
+  document.addEventListener('keydown', function (e) {
+    if (!gOpen) return;
+    if (e.key === 'Escape') { e.preventDefault(); }
+    else if (e.key === 'Tab') {
+      var f = $$('button', gate).filter(function (x) { return x.offsetParent !== null; });
+      if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+  gText.addEventListener('click', function () { if (typing) finishTyping(); });
+
+  /* ---- boot lalu tampilkan modal ---- */
+  function hideBoot() {
+    var b = $('#boot'); if (b) b.classList.add('done');
+    setTimeout(openGate, 450);
+  }
   if (document.readyState === 'complete') setTimeout(hideBoot, 700); else window.addEventListener('load', function () { setTimeout(hideBoot, 700); });
 })();
 </script>
